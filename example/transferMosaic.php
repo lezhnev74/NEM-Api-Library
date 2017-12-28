@@ -7,15 +7,21 @@
  * Please test on testnet!
  */
 
-    require_once '../NEMApiLibrary.php';
-    
+namespace {
+
+    require "../vendor/autoload.php";
+
+    use NemAPI\TransactionBuilder;
+
+
+
     $net = 'testnet';
     $NEMpubkey = '';
     $NEMprikey = '';
     $baseurl = 'http://localhost:7890';
     $address = 'TDEK3DOKN54XWEVUNXJOLWDJMYEF2G7HPK2LRU5W'; // 送り先 recipient
 
-    
+
     $mosaic = new TransactionBuilder($net);
     $mosaic->setting($NEMpubkey, $NEMprikey, $baseurl);
     $mosaic->ImportAddr($address);
@@ -28,20 +34,22 @@
      */
     $mosaic->InputMosaic('namuyan', 'namu', 2345);
     $mosaic->InputMosaic('godtanu', 'godtanu', 100);
-    
+
     $fee = $mosaic->EstimateFee();
     $levy = $mosaic->EstimateLevy();
     $reslt = $mosaic->SendMosaicVer2();
     $anal = $mosaic->analysis($reslt);
-    
-    echo '<P>','Fee is ',$fee,'<BR>';
-    if($anal['status']){
-        echo 'TXID is ',$anal['txid'],'</P>';
-        echo '<PRE>',"levy is\n";
+
+    echo '<P>', 'Fee is ', $fee, '<BR>';
+    if ($anal['status']) {
+        echo 'TXID is ', $anal['txid'], '</P>';
+        echo '<PRE>', "levy is\n";
         print_r($levy);
         echo "Send mosaic is or are\n";
         print_r($mosaic->mosaic);
         echo '<?PRE>';
-    }else{
+    } else {
         echo "Fail to send.<BR>error message: {$anal['message']}</P>";
     }
+
+}

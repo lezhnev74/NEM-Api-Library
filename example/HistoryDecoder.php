@@ -8,7 +8,7 @@
  * to arranges the format for process all together.
  */
 
-    require_once '../NEMApiLibrary.php';
+require "../vendor/autoload.php";
     ?>
 <style>
 table.HistoryTable {
@@ -44,7 +44,7 @@ div.division {
     $baseurl = 'http://localhost:7890';
     
     
-    $his = new History($net);
+    $his = new \NemAPI\History($net);
     $his->setting($NEMpubkey, $NEMprikey, $baseurl);
     
     $r = 100;
@@ -86,7 +86,7 @@ div.division {
                 foreach ($transactionValue['mosaic'] as $value) {
                     $namespace = $value['mosaicId']['namespaceId'];
                     $name = $value['mosaicId']['name'];
-                    $Detail = SerchMosaicInfo($baseurl, $namespace, $name);
+                    $Detail = \NemAPI\common::SerchMosaicInfo($baseurl, $namespace, $name);
                     if(!$Detail){continue;}
                     $amount = $value['quantity'] / pow(10,$Detail['divisibility']);
                     $AmountSet .= '<B>'. $amount .' '. strtoupper($namespace).':'.$name.'</B><BR>';
@@ -98,7 +98,7 @@ div.division {
                         
             echo '<tr>';
             echo "<td>{$transactionValue['height']}</td>";
-            echo "<td>". TransactionBuilder::PubKey2Addr($transactionValue['siger']) . "</td>";
+            echo "<td>". \NemAPI\TransactionBuilder::PubKey2Addr($transactionValue['siger']) . "</td>";
             echo "<td>$AmountSet</td>";
             echo "<td>$message</td>";
             echo "<td><a href='http://bob.nem.ninja:8765/#/transfer/{$transactionValue['hash']}' alt='nem blockexplorer'>".  substr($transactionValue['hash'], 0, 12)."...</a></td>";
