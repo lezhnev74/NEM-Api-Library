@@ -61,7 +61,7 @@ class History
          */
         $this->checkWDM();
         $url = $this->baseurl . '/local/account/transfers/incoming';
-        $POST_DATA = array('value' => $this->prikey);
+        $POST_DATA = ['value' => $this->prikey];
         if (isset($this->pageid)) {
             $POST_DATA['id'] = $this->pageid;
         } // 2ページよりidによりページを指示
@@ -81,7 +81,7 @@ class History
          */
         $this->checkWDM();
         $url = $this->baseurl . '/local/account/transfers/outgoing';
-        $POST_DATA = array('value' => $this->prikey);
+        $POST_DATA = ['value' => $this->prikey];
         if (isset($this->pageid)) {
             $POST_DATA['id'] = $this->pageid;
         } // 2ページよりidによりページを指示
@@ -101,7 +101,7 @@ class History
          */
         $this->checkWDM();
         $url = $this->baseurl . '/local/account/transfers/all';
-        $POST_DATA = array('value' => $this->prikey);
+        $POST_DATA = ['value' => $this->prikey];
         if (isset($this->pageid)) {
             $POST_DATA['id'] = $this->pageid;
         } // 2ページよりidによりページを指示
@@ -180,9 +180,9 @@ class History
         if (!isset($transaction[0])) {
             throw new Exception('Error:$transaction key is not numeristic.');
         }
-        $reslt = array();
+        $reslt = [];
         foreach ($transaction as $transactionValue) {
-            $tmp = array();
+            $tmp = [];
             $tmp['height'] = $transactionValue['meta']['height'];
             $tmp['timeStamp'] = $transactionValue['transaction']['timeStamp'] + 1427587585;
             // 内部ハッシュが実際の送金内容
