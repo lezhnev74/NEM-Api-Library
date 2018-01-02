@@ -40,6 +40,15 @@ class TransactionBuilder
         $this->net = $net;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getBaseurl()
+    {
+        return $this->baseurl;
+    }
+
+    
     public function setting($NEMpubkey, $NEMprikey, $baseurl = 'http://localhost:7890')
     {
         $this->pubkey = $NEMpubkey;
@@ -208,7 +217,7 @@ class TransactionBuilder
             return $POST_DATA;
         }
     }
-    
+
     public function SendNEMver1($send = true)
     {
         // NEMを$addressへ送る,Non-mosaic
