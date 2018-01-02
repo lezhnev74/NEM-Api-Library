@@ -48,7 +48,7 @@ class TransactionBuilder
         return $this->baseurl;
     }
 
-    
+
     public function setting($NEMpubkey, $NEMprikey, $baseurl = 'http://localhost:7890')
     {
         $this->pubkey = $NEMpubkey;

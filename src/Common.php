@@ -157,14 +157,14 @@ class common
     {
         // Mosaicの詳細を検索、検索して無かったらFalse返す
         if ($namespace !== 'nem' AND $name !== 'xem') {
-            if (CasheGet($namespace)) {
+            if (self::CasheGet($namespace)) {
                 // キャッシュアリ
-                $DetailMosaic = CasheGet($namespace);
+                $DetailMosaic = self::CasheGet($namespace);
             } else {
                 // キャッシュ無し
                 $url = $baseurl . "/namespace/mosaic/definition/page?namespace=" . $namespace;
-                $DetailMosaic = get_json_array($url);
-                CasheInsert($namespace, $DetailMosaic);
+                $DetailMosaic = self::get_json_array($url);
+                self::CasheInsert($namespace, $DetailMosaic);
             }
 
             if (!isset($DetailMosaic['data'])) {
