@@ -144,6 +144,71 @@ class TransactionBuilder
         }
     }
 
+    /**
+     * @link https://nemproject.github.io/#creating-mosaics
+     *
+     * @param $mosaic
+     * @param bool $send
+     * @return array|bool|mixed
+     */
+    function createMosaic(
+        $path,
+        $name,
+        $description,
+        $initialSupply = 100,
+        $transferable = true,
+        $mutable = true,
+        $divisibility = 6,
+        $send = true
+    ) {
+        $url = $this->baseurl . "/transaction/prepare-announce";
+        $this->type = 16385;
+        $POST_DATA = [
+            'transaction' => [
+                'timeStamp' => (time() - 1427587585), // NEMは1427587585つまり2015/3/29 0:6:25 UTCスタート
+                'fee' => 150000,
+                'type' => $this->type,
+                'deadline' => (time() - 1427587585 + 43200), // 送金の期限
+                'version' => $this->version_ver1,  // mainnetは-1744830465、testnetは-1744830463
+                'signer' => $this->pubkey,  // signer　サイン主のこと
+                "creationFee" => 10 * 1000000, // 10 XEMs
+                "creationFeeSink" => 'TBMOSAICOD4F54EE5CDMR23CCBGOAM2XSJBR5OLC',
+                "mosaicDefinition" => [
+                    "creator" => $this->pubkey,
+                    "description" => $description,
+                    "id" => [
+                        "namespaceId" => $path,
+                        "name" => $name,
+                    ],
+                    "properties" => [
+                        [
+                            "name" => "divisibility",
+                            "value" => (string)$divisibility,
+                        ],
+                        [
+                            "name" => "initialSupply",
+                            "value" => (string)$initialSupply,
+                        ],
+                        [
+                            "name" => "supplyMutable",
+                            "value" => $mutable ? "true" : "false",
+                        ],
+                        [
+                            "name" => "transferable",
+                            "value" => $transferable ? "true" : "false",
+                        ],
+                    ],
+                ],
+            ],
+            'privateKey' => $this->prikey,
+        ];
+        if ($send) {
+            return common::get_POSTdata($url, json_encode($POST_DATA, JSON_PRETTY_PRINT));
+        } else {
+            return $POST_DATA;
+        }
+    }
+    
     public function SendNEMver1($send = true)
     {
         // NEMを$addressへ送る,Non-mosaic

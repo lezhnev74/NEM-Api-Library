@@ -135,13 +135,7 @@ class common
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
         if ($code !== 200) {
-            $i--;
-            sleep(2);
-            if ($i > 0) {
-                goto RE_TRY;
-            } else {
-                return false;
-            }
+            return false;
         } else {
             $json = mb_convert_encoding($json, 'UTF8', 'ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN');
             $arr = json_decode($json, true);
